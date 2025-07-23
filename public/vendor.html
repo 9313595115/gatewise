@@ -459,7 +459,7 @@
         document.addEventListener('DOMContentLoaded', fetchProperties);
     
         function fetchProperties() {
-            fetch('http://localhost:5001/properties')
+            fetch('https://gatewise.onrender.com/properties')
                 .then(response => response.json())
                 .then(data => {
                     const propertyList = document.getElementById('propertyList');
@@ -498,7 +498,7 @@
             const contactNumber = document.getElementById('contactNumber').value;
             const propertyDescription = document.getElementById('propertyDescription').value;
     
-            fetch('http://localhost:5001/add-property', {
+            fetch('https://gatewise.onrender.com/add-property', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -530,7 +530,7 @@
         function removeProperty(propertyId) {
             if (!confirm("Are you sure you want to remove this property?")) return;
     
-            fetch(`http://localhost:5001/remove-property/${propertyId}`, {
+            fetch(`https://gatewise.onrender.com/remove-property/${propertyId}`, {
                 method: 'DELETE',
             })
             .then(response => response.json())

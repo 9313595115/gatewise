@@ -514,7 +514,7 @@
     
         function loadContacts() {
             console.log("Loading contacts...");
-            fetch("http://localhost:5001/directory-contacts")
+            fetch("https://gatewise.onrender.com/directory-contacts")
                 .then(response => {
                     if (!response.ok) {
                         throw new Error(`HTTP error! status: ${response.status}`);
@@ -576,7 +576,7 @@
     
             const contact = { name, role, phone, email };
     
-            fetch("http://localhost:5001/add-directory-contact", {
+            fetch("https://gatewise.onrender.com/add-directory-contact", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(contact)
@@ -604,7 +604,7 @@
         function deleteContact(id) {
             if (!confirm("Are you sure you want to delete this contact?")) return;
             
-            fetch(`http://localhost:5001/remove-directory-contact/${id}`, { 
+            fetch(`https://gatewise.onrender.com/remove-directory-contact/${id}`, { 
                 method: "DELETE" 
             })
             .then(response => {

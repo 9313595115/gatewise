@@ -432,7 +432,7 @@
         });
 
         function fetchDeliveries() {
-            fetch('http://localhost:5001/deliveries')
+            fetch('https://gatewise.onrender.com/deliveries')
                 .then(response => {
                     if (!response.ok) {
                         throw new Error('Network response was not ok');
@@ -509,7 +509,7 @@
             const arrivalDate = document.getElementById('arrivalDate').value;
     
             // Send data to server
-            fetch('http://localhost:5001/add-delivery', {
+            fetch('https://gatewise.onrender.com/add-delivery', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -547,7 +547,7 @@
                 return;
             }
             
-            fetch(`http://localhost:5001/remove-delivery/${id}`, {
+            fetch(`https://gatewise.onrender.com/remove-delivery/${id}`, {
                 method: 'DELETE'
             })
             .then(response => {

@@ -424,7 +424,7 @@
         });
 
         function fetchAlerts() {
-            fetch('http://localhost:5001/alerts')
+            fetch('https://gatewise.onrender.com/alerts')
                 .then(response => {
                     if (!response.ok) throw new Error('Network response was not ok');
                     return response.json();
@@ -490,7 +490,7 @@
                 eventDate: document.getElementById('alertDate').value
             };
 
-            fetch('http://localhost:5001/add-alert', {
+            fetch('https://gatewise.onrender.com/add-alert', {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify(alertData)
@@ -516,7 +516,7 @@
         function removeAlert(id) {
             if (!confirm('Are you sure you want to remove this alert?')) return;
             
-            fetch(`http://localhost:5001/remove-alert/${id}`, {
+            fetch(`https://gatewise.onrender.com/remove-alert/${id}`, {
                 method: 'DELETE'
             })
             .then(response => {

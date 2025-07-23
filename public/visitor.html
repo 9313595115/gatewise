@@ -434,7 +434,7 @@
         });
 
         function fetchVisitors() {
-            fetch('http://localhost:5001/visitors')
+            fetch('https://gatewise.onrender.com/visitors')
                 .then(response => {
                     if (!response.ok) throw new Error('Network response was not ok');
                     return response.json();
@@ -504,7 +504,7 @@
                 purpose: document.getElementById('visitPurpose').value
             };
 
-            fetch('http://localhost:5001/add-visitor', {
+            fetch('https://gatewise.onrender.com/add-visitor', {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify(visitorData)
@@ -530,7 +530,7 @@
         function removeVisitor(id) {
             if (!confirm('Are you sure you want to remove this visitor?')) return;
             
-            fetch(`http://localhost:5001/remove-visitor/${id}`, {
+            fetch(`https://gatewise.onrender.com/remove-visitor/${id}`, {
                 method: 'DELETE'
             })
             .then(response => {
