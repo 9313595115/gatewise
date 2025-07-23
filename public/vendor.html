@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vendor and Services - GateWise</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        :root {
+            --primary-color: #60a5fa;
+            --secondary-color: #3b82f6;
+            --accent-color: #ef4444;
+            --text-primary: #f8fafc;
+            --text-secondary: #ffffff;
+            --sidebar-bg: #1e293b;
+            --main-bg: #0f172a;
+            --card-bg: #1e293b;
+            --border-color: #334155;
+        }
+
+        [data-theme="light"] {
+            --primary-color: #3b82f6;
+            --secondary-color: #2563eb;
+            --accent-color: #ef4444;
+            --text-primary: #1e293b;
+            --text-secondary: white;
+            --sidebar-bg: #0f203d;
+            --main-bg: #dfe7ee;
+            --card-bg: #ffffff;
+            --border-color: #e2e8f0;
+        }
+
+        body {
+            background: var(--main-bg);
+            color: var(--text-primary);
+            transition: background 0.3s ease, color 0.3s ease;
+        }
+
+        .container {
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            min-height: 100vh;
+            gap: 20px;
+        }
+
+        /* Unified Sidebar Styling */
+        .sidebar {
+            background: var(--sidebar-bg);
+            padding: 25px;
+            position: relative;
+            z-index: 2;
+            border-right: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+            padding: 15px;
+            color: var(--text-secondary);
+            font-weight: 700;
+            font-size: 1.5rem;
+        }
+
+        .menu-item {
+            display: flex;
+            align-items: center;
+            padding: 14px 20px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            color: var(--text-secondary);
+            position: relative;
+            font-size: 1rem;
+        }
+
+        .menu-item:hover {
+            background: rgba(96,165,250,0.1);
+            color: var(--primary-color);
+            transform: translateX(8px);
+        }
+
+        .menu-item.active {
+            background: rgba(96,165,250,0.2);
+            color: var(--primary-color);
+            font-weight: 500;
+        }
+
+        .menu-item.active::before {
+            content: '';
+            position: absolute;
+            left: -25px;
+            top: 0;
+            height: 100%;
+            width: 4px;
+            background: var(--primary-color);
+            border-radius: 2px;
+        }
+
+        .icon {
+            width: 24px;
+            text-align: center;
+            margin-right: 15px;
+            font-size: 1.1rem;
+        }
+
+        .main-content {
+            padding: 30px 40px;
+        }
+
+        /* Unified Header Styling */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            gap: 20px;
+        }
+
+        .header h1 {
+            font-size: 1.8rem;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        .header-controls {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            height: 40px;
+        }
+
+        .profile-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .profile-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: var(--primary-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .theme-toggle {
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Vendor and Services Specific Styles */
+        .vendor-services {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .add-property-form {
+            background: var(--card-bg);
+            padding: 25px;
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+            margin-bottom: 30px;
+        }
+
+        .property-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: var(--card-bg);
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+        }
+
+        .property-table th,
+        .property-table td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .property-table th {
+            background: rgba(96,165,250,0.1);
+            color: var(--primary-color);
+        }
+
+        .action-btn {
+            padding: 6px 12px;
+            border-radius: 6px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .remove-btn {
+            background: var(--accent-color);
+            color: white;
+        }
+
+        .remove-btn:hover {
+            opacity: 0.9;
+        }
+
+        .btn-primary {
+            background: var(--primary-color);
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .btn-primary:hover {
+            background: var(--secondary-color);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            background: var(--main-bg);
+            color: var(--text-primary);
+            transition: all 0.3s ease;
+        }
+
+        /* Password Verification Modal */
+        .password-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background: var(--card-bg);
+            padding: 25px;
+            border-radius: 16px;
+            width: 400px;
+            max-width: 90%;
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 15px; 
+            margin-top: 20px;
+        }
+
+        .text-muted {
+            color: var(--text-secondary);
+            opacity: 0.7;
+            font-style: italic;
+        }
+
+      
+        @media (max-width: 768px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+            .sidebar {
+                display: none;
+            }
+            .profile-btn,
+            .theme-toggle {
+                width: 36px;
+                height: 36px;
+            }
+            .property-table th,
+            .property-table td {
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <aside class="sidebar">
+            <div class="logo">
+                <i class="fas fa-building"></i>
+                GateWise
+            </div>
+            <div class="menu-item" onclick="window.location.href='dashboard.html';">
+                <i class="fas fa-home icon"></i>
+                Dashboard
+            </div>
+            <div class="menu-item" onclick="window.location.href='help.html';">
+                <i class="fas fa-headset icon"></i>
+                Helpdesk
+            </div>
+            <div class="menu-item" onclick="window.location.href='staff.html';">
+                <i class="fas fa-users icon"></i>
+                Staff 
+            </div>
+            <div class="menu-item" onclick="window.location.href='visitor.html';">
+                <i class="fas fa-user-check icon"></i>
+                Visitor 
+            </div>
+            <div class="menu-item active">
+                <i class="fas fa-truck icon"></i>
+                Vendor Services
+            </div>
+            <div class="menu-item" onclick="window.location.href='delivery.html';">
+                <i class="fas fa-box icon"></i>
+                Delivery 
+            </div>
+            <div class="menu-item" onclick="window.location.href='directory.html';">
+                <i class="fas fa-address-book icon"></i>
+                Directory
+            </div>
+            <div class="menu-item" onclick="window.location.href='alert.html';">
+                <i class="fas fa-bell icon"></i>
+                Alerts
+            </div>
+            <div class="menu-item" onclick="window.location.href='index.html';">
+                <i class="fas fa-sign-out-alt icon"></i>
+                Log Out
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <div class="header">
+                <h1>Vendor Services</h1>
+                <div class="header-controls">
+                    <span id="currentUser">Guest</span>
+                    <a href="profile.html"> 
+                        <div class="profile-btn">
+                            <div class="profile-icon">
+                                <i class="fas fa-user text-white"></i>
+                            </div>
+                        </div>
+                    </a>
+                    <div class="theme-toggle" id="themeToggle">
+                        <i class="fas fa-moon" id="themeIcon"></i>
+                    </div>
+                </div>
+            </div>
+
+            <div class="vendor-services">
+                <button class="btn-primary" onclick="togglePropertyForm()">Add Property</button><br><br>
+
+                <div class="add-property-form" id="propertyForm" style="display: none;">
+                    <h3 style="margin-bottom: 20px;">Add New Property</h3>
+                    <form id="addPropertyForm">
+                        <div class="form-group">
+                            <label class="form-label">Property Type</label>
+                            <select class="form-input" id="propertyType" required>
+                                <option value="sell">For Sell</option>
+                                <option value="rent">For Rent</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Owner Name</label>
+                            <input type="text" class="form-input" id="ownerName" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Contact Number</label>
+                            <input type="tel" class="form-input" id="contactNumber" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Property Description</label>
+                            <textarea class="form-input" id="propertyDescription" rows="4" required></textarea>
+                        </div>
+                        <button type="submit" class="btn-primary">Add Property</button>
+                    </form>
+                </div>
+
+                <table class="property-table">
+                    <thead>
+                        <tr>
+                            <th>Property Type</th>
+                            <th>Owner Name</th>
+                            <th>Contact Number</th>
+                            <th>Property Description</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="propertyList">
+                        <!-- Property data will be populated here -->
+                    </tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Get current user from session storage
+        const currentUser = sessionStorage.getItem("user");
+        const parsedUser = currentUser ? JSON.parse(currentUser) : null;
+        
+        // Set the username in the header
+        document.getElementById('currentUser').textContent = parsedUser?.username || 'Guest';
+    
+        // Theme Management
+        const themeToggle = document.getElementById('themeToggle');
+        const themeIcon = document.getElementById('themeIcon');
+        const body = document.body;
+    
+        const savedTheme = localStorage.getItem('theme') || 'dark';
+        body.setAttribute('data-theme', savedTheme);
+        themeIcon.className = savedTheme === 'light' ? 'fas fa-sun' : 'fas fa-moon';
+    
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = body.getAttribute('data-theme');
+            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+            
+            body.setAttribute('data-theme', newTheme);
+            themeIcon.className = newTheme === 'light' ? 'fas fa-sun' : 'fas fa-moon';
+            localStorage.setItem('theme', newTheme);
+        });
+    
+        // Load properties when page loads
+        document.addEventListener('DOMContentLoaded', fetchProperties);
+    
+        function fetchProperties() {
+            fetch('http://localhost:5001/properties')
+                .then(response => response.json())
+                .then(data => {
+                    const propertyList = document.getElementById('propertyList');
+                    propertyList.innerHTML = ''; // Clear existing rows
+                    
+                    data.forEach(property => {
+                        const row = document.createElement('tr');
+                        row.innerHTML = `
+                            <td>${property.property_type === 'sell' ? 'For Sell' : 'For Rent'}</td>
+                            <td>${property.owner_name}</td>
+                            <td>${property.contact_number}</td>
+                            <td>${property.description}</td>
+                            <td>
+                                ${parsedUser?.username === "admin" 
+                                    ? `<button class="action-btn remove-btn" onclick="removeProperty(${property.id})">Remove</button>` 
+                                    : `<button class="btn" disabled>Not Allowed</button>`}
+                            </td>
+                        `;
+                        propertyList.appendChild(row);
+                    });
+                })
+                .catch(error => {
+                    console.error('Error fetching properties:', error);
+                });
+        }
+    
+        function togglePropertyForm() {
+            const form = document.getElementById('propertyForm');
+            form.style.display = form.style.display === 'none' ? 'block' : 'none';
+        }
+    
+        document.getElementById('addPropertyForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const propertyType = document.getElementById('propertyType').value;
+            const ownerName = document.getElementById('ownerName').value;
+            const contactNumber = document.getElementById('contactNumber').value;
+            const propertyDescription = document.getElementById('propertyDescription').value;
+    
+            fetch('http://localhost:5001/add-property', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    propertyType,
+                    ownerName,
+                    contactNumber,
+                    propertyDescription
+                }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.message === "Property added successfully") {
+                    document.getElementById('addPropertyForm').reset();
+                    togglePropertyForm();
+                    fetchProperties();
+                    alert('Property added successfully!');
+                } else {
+                    alert('Error adding property: ' + (data.message || 'Unknown error'));
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Error adding property');
+            });
+        });
+    
+        function removeProperty(propertyId) {
+            if (!confirm("Are you sure you want to remove this property?")) return;
+    
+            fetch(`http://localhost:5001/remove-property/${propertyId}`, {
+                method: 'DELETE',
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.message === "Property removed successfully") {
+                    fetchProperties();
+                    alert('Property removed successfully!');
+                } else {
+                    alert('Error removing property: ' + (data.message || 'Unknown error'));
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Error removing property');
+            });
+        }
+    </script>
+</body>
+</html>

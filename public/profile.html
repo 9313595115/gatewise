@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile - GateWise</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Previous CSS remains the same */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        :root {
+            --primary-color: #60a5fa;
+            --secondary-color: #3b82f6;
+            --accent-color: #ef4444;
+            --text-primary: #f8fafc;
+            --text-secondary: #ffffff;
+            --sidebar-bg: #1e293b;
+            --main-bg: #0f172a;
+            --card-bg: #1e293b;
+            --border-color: #334155;
+        }
+
+        [data-theme="light"] {
+            --primary-color: #3b82f6;
+            --secondary-color: #2563eb;
+            --accent-color: #ef4444;
+            --text-primary: #1e293b;
+            --text-secondary: white;
+            --sidebar-bg: #0f203d;
+            --main-bg: #dfe7ee;
+            --card-bg: #ffffff;
+            --border-color: #e2e8f0;
+        }
+
+        body {
+            background: var(--main-bg);
+            color: var(--text-primary);
+            transition: background 0.3s ease, color 0.3s ease;
+        }
+
+        .container {
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            min-height: 100vh;
+            gap: 20px;
+        }
+
+        /* Unified Sidebar Styling */
+        .sidebar {
+            background: var(--sidebar-bg);
+            padding: 25px;
+            position: relative;
+            z-index: 2;
+            border-right: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+            padding: 15px;
+            color: var(--text-secondary);
+            font-weight: 700;
+            font-size: 1.5rem;
+        }
+
+        .menu-item {
+            display: flex;
+            align-items: center;
+            padding: 14px 20px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            color: var(--text-secondary);
+            position: relative;
+            font-size: 1rem;
+        }
+
+        .menu-item:hover {
+            background: rgba(96,165,250,0.1);
+            color: var(--primary-color);
+            transform: translateX(8px);
+        }
+
+        .menu-item.active {
+            background: rgba(96,165,250,0.2);
+            color: var(--primary-color);
+            font-weight: 500;
+        }
+
+        .menu-item.active::before {
+            content: '';
+            position: absolute;
+            left: -25px;
+            top: 0;
+            height: 100%;
+            width: 4px;
+            background: var(--primary-color);
+            border-radius: 2px;
+        }
+
+        .icon {
+            width: 24px;
+            text-align: center;
+            margin-right: 15px;
+            font-size: 1.1rem;
+        }
+
+        .main-content {
+            padding: 30px 40px;
+        }
+
+        /* Profile Page Specific Styles */
+        .profile-section {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .profile-form {
+            background: var(--card-bg);
+            padding: 25px;
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            background: var(--main-bg);
+            color: var(--text-primary);
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: var(--primary-color);
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            width: 100%;
+            margin-top: 15px;
+        }
+
+        .btn-primary:hover {
+            background: var(--secondary-color);
+        }
+
+        /* Header Styling */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            gap: 20px;
+        }
+
+        .header h1 {
+            font-size: 1.8rem;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        .header-controls {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            height: 40px;
+        }
+
+        .profile-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .profile-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: var(--primary-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .theme-toggle {
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+            .sidebar {
+                display: none;
+            }
+            .profile-form {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <aside class="sidebar">
+            <div class="logo">
+                <i class="fas fa-building"></i>
+                GateWise
+            </div>
+            <div class="menu-item" onclick="window.location.href='dashboard.html';">
+                <i class="fas fa-home icon"></i>
+                Dashboard
+            </div>
+            <div class="menu-item" onclick="window.location.href='help.html';">
+                <i class="fas fa-headset icon"></i>
+                Helpdesk
+            </div>
+            <div class="menu-item" onclick="window.location.href='staff.html';">
+                <i class="fas fa-users icon"></i>
+                Staff Management
+            </div>
+            <div class="menu-item" onclick="window.location.href='visitor.html';">
+                <i class="fas fa-user-check icon"></i>
+                Visitor Management
+            </div>
+            <div class="menu-item" onclick="window.location.href='vendor.html';">
+                <i class="fas fa-truck icon"></i>
+                Vendor Services
+            </div>
+            <div class="menu-item" onclick="window.location.href='delivery.html';">
+                <i class="fas fa-box icon"></i>
+                Delivery Management
+            </div>
+            <div class="menu-item" onclick="window.location.href='directory.html';">
+                <i class="fas fa-address-book icon"></i>
+                Directory
+            </div>
+            <div class="menu-item" onclick="window.location.href='alerts.html';">
+                <i class="fas fa-bell icon"></i>
+                Alerts
+            </div>
+            <div class="menu-item active">
+                <i class="fas fa-sign-out-alt icon"></i>
+                Log Out
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <div class="header">
+                <h1>Profile Settings</h1>
+                <div class="header-controls">
+                    <a href="profile.html"> 
+                        <div class="profile-btn">
+                            <div class="profile-icon">
+                                <i class="fas fa-user text-white"></i>
+                            </div>
+                        </div>
+                    </a>
+                    <div class="theme-toggle" id="themeToggle">
+                        <i class="fas fa-moon" id="themeIcon"></i>
+                    </div>
+                </div>
+            </div>
+
+            <div class="profile-section">
+                <form class="profile-form" id="profileForm">
+                    <div class="form-group">
+                        <label class="form-label">Username</label>
+                        <input type="text" class="form-input" id="username" required readonly>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Current Password</label>
+                        <input type="password" class="form-input" id="currentPassword" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">New Password</label>
+                        <input type="password" class="form-input" id="newPassword" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Confirm New Password</label>
+                        <input type="password" class="form-input" id="confirmPassword" required>
+                    </div>
+                    <button type="submit" class="btn-primary">Update Profile</button>
+                </form>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Theme Management
+        const themeToggle = document.getElementById('themeToggle');
+        const themeIcon = document.getElementById('themeIcon');
+        const body = document.body;
+
+        const savedTheme = localStorage.getItem('theme') || 'dark';
+        body.setAttribute('data-theme', savedTheme);
+        themeIcon.className = savedTheme === 'light' ? 'fas fa-sun' : 'fas fa-moon';
+
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = body.getAttribute('data-theme');
+            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+            
+            body.setAttribute('data-theme', newTheme);
+            themeIcon.className = newTheme === 'light' ? 'fas fa-sun' : 'fas fa-moon';
+            localStorage.setItem('theme', newTheme);
+        });
+
+        // Fetch Username from Session Storage
+        function fetchUsername() {
+            const user = JSON.parse(sessionStorage.getItem('user'));
+            if (user) {
+                document.getElementById('username').value = user.username;
+            } else {
+                // Redirect to login page if no user is found in session
+                window.location.href = 'index.html';
+            }
+        }
+
+        // Profile Form Handling
+        document.getElementById('profileForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const currentPassword = document.getElementById('currentPassword').value;
+            const newPassword = document.getElementById('newPassword').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+
+            if (newPassword !== confirmPassword) {
+                alert('New passwords do not match!');
+                return;
+            }
+
+            if (newPassword.length < 8) {
+                alert('Password must be at least 8 characters!');
+                return;
+            }
+
+            try {
+                const user = JSON.parse(sessionStorage.getItem('user'));
+                const response = await fetch('http://localhost:5001/update-password', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        username: user.username,
+                        currentPassword,
+                        newPassword
+                    })
+                });
+                const data = await response.json();
+                alert(data.message || 'Password updated successfully!');
+                if (data.success) this.reset();
+            } catch (error) {
+                console.error('Error updating password:', error);
+            }
+        });
+
+        // Fetch and display username when the page loads
+        fetchUsername();
+    </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
