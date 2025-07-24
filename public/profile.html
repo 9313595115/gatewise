@@ -377,7 +377,7 @@
             }
             try {
                 const user = JSON.parse(sessionStorage.getItem('user'));
-                const response = await fetch('https://gatewise.onrender.com/update-password', {
+                const response = await fetch('/update-password', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
