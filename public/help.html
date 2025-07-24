@@ -478,7 +478,7 @@
             const description = document.getElementById('ticketDescription').value;
             const priority = document.getElementById('ticketPriority').value;
 
-            fetch("https://gatewise.onrender.com/submit-ticket", {
+            fetch("/submit-ticket", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ subject, description, priority })
@@ -493,7 +493,7 @@
 
         // Fetch Ticket Counts
         function fetchTicketCounts() {
-            fetch("https://gatewise.onrender.com/ticket-counts")
+            fetch("/ticket-counts")
                 .then(response => response.json())
                 .then(data => {
                     document.getElementById('openTickets').innerText = data.open;
@@ -504,7 +504,7 @@
 
         // Fetch Recent Tickets
         function fetchRecentTickets() {
-            fetch("https://gatewise.onrender.com/recent-tickets")
+            fetch("/recent-tickets")
                 .then(response => response.json())
                 .then(data => {
                     const ticketList = document.getElementById('ticketList');
@@ -545,7 +545,7 @@
                 return;
             }
 
-            fetch(`https://gatewise.onrender.com/update-ticket/${id}`, {
+            fetch(`/update-ticket/${id}`, {
                 method: "PUT",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ status: "Resolved" })
@@ -566,7 +566,7 @@
             }
 
             if (confirm("Are you sure you want to remove this ticket?")) {
-                fetch(`https://gatewise.onrender.com/remove-ticket/${id}`, {
+                fetch(`/remove-ticket/${id}`, {
                     method: "DELETE"
                 })
                 .then(response => response.json())
